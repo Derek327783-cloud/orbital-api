@@ -55,14 +55,14 @@ def get_mod_Class_Info(ID):
 @app.route('/api/lessonType/schedule/<ID>', methods= ["GET"])
 def get_mod_Types(ID):
     input = ID.upper()
-    document2 = mongo.db.find_one({'_id': input})
+    document2 = mongo.db.lessonList.find_one({'_id': input})
     return document2
 
 #For returning the list of module codes
 @app.route('/api/semD/modList/<letters>', methods = ['GET'])
 def get_mod_codes(letters):
     length = len(letters)
-    collection = mongo.db.semD.find()
+    collection = mongo.db.lessonList.find()
     output = {}
     output['codes'] = []
     for mods in collection:
@@ -102,6 +102,43 @@ def get_pair(code):
     ID = code.upper()
     doc = mongo.db.pairList.find_one({'_id':ID})
     return doc
+
+#For posting errors
+@app.route('/api/error/General/<feedback>' , methods = ['GET','PUT'])
+def sub_error(feedback):
+    input = {'feedback': [feedback]}
+    x = mongo.db.General.insert_one(input)
+    return 'updated'
+
+#For posting errors
+@app.route('/api/error/General/<feedback>' , methods = ['GET','PUT'])
+def sub_general(feedback):
+    input = {'feedback': [feedback]}
+    x = mongo.db.General.insert_one(input)
+    return 'updated'
+
+#For posting errors
+@app.route('/api/error/Preferences/<feedback>' , methods = ['GET','PUT'])
+def sub_preferences(feedback):
+    input = {'feedback': [feedback]}
+    x = mongo.db.Preferences.insert_one(input)
+    return 'updated'
+
+#For posting errors
+@app.route('/api/error/Data/<feedback>' , methods = ['GET','PUT'])
+def sub_data(feedback):
+    input = {'feedback': [feedback]}
+    x = mongo.db.Data.insert_one(input)
+    return 'updated'
+
+#For posting errors
+@app.route('/api/error/Timetable/<feedback>' , methods = ['GET','PUT'])
+def sub_timetable(feedback):
+    input = {'feedback': [feedback]}
+    x = mongo.db.Timetable.insert_one(input)
+    return 'updated'
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port = 3230)
