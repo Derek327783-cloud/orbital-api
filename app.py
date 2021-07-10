@@ -104,38 +104,31 @@ def get_pair(code):
     return doc
 
 #For posting errors
-@app.route('/api/error/General/<feedback>' , methods = ['GET','PUT'])
-def sub_error(feedback):
-    input = {'feedback': [feedback]}
-    x = mongo.db.General.insert_one(input)
-    return 'updated'
-
-#For posting errors
-@app.route('/api/error/General/<feedback>' , methods = ['GET','PUT'])
+@app.route('/api/error/1/<feedback>' , methods = ['GET','PUT'])
 def sub_general(feedback):
-    input = {'feedback': [feedback]}
-    x = mongo.db.General.insert_one(input)
-    return 'updated'
-
-#For posting errors
-@app.route('/api/error/Preferences/<feedback>' , methods = ['GET','PUT'])
-def sub_preferences(feedback):
-    input = {'feedback': [feedback]}
-    x = mongo.db.Preferences.insert_one(input)
-    return 'updated'
-
-#For posting errors
-@app.route('/api/error/Data/<feedback>' , methods = ['GET','PUT'])
-def sub_data(feedback):
     input = {'feedback': [feedback]}
     x = mongo.db.Data.insert_one(input)
     return 'updated'
 
 #For posting errors
-@app.route('/api/error/Timetable/<feedback>' , methods = ['GET','PUT'])
-def sub_timetable(feedback):
+@app.route('/api/error/2/<feedback>' , methods = ['GET','PUT'])
+def sub_preferences(feedback):
+    input = {'feedback': [feedback]}
+    x = mongo.db.Warning.insert_one(input)
+    return 'updated'
+
+#For posting errors
+@app.route('/api/error/3/<feedback>' , methods = ['GET','PUT'])
+def sub_data(feedback):
     input = {'feedback': [feedback]}
     x = mongo.db.Timetable.insert_one(input)
+    return 'updated'
+
+#For posting errors
+@app.route('/api/error/4/<feedback>' , methods = ['GET','PUT'])
+def sub_timetable(feedback):
+    input = {'feedback': [feedback]}
+    x = mongo.db.Others.insert_one(input)
     return 'updated'
 
 
