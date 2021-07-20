@@ -2,6 +2,7 @@ from flask import Flask
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from apriori import apr, ranList
+import random
 
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = "API"
@@ -27,21 +28,34 @@ def add_rec(list):
 #For getting reccomended modules based on user inputs
 @app.route('/api/recList/recs/<inp>',methods = ['GET'])
 def get_rec(inp):
-    ulist = inp.split('_')
-    collection = mongo.db.recList.find()
-    data = {}
-    counter = 0
-    for i in collection:
-        data[str(counter)] = i['UI']
-        counter += 1
-    uData = list(data.values())
-    output = apr(uData, ulist)
-    oD = {}
-    oD['recs'] = []
-    for i in output:
-        oD['recs'].append(i)
-    return oD
+    if (inp != None):
+        ulist = inp.split('_')
+        collection = mongo.db.recList.find()
+        data = {}
+        counter = 0
+        for i in collection:
+            data[str(counter)] = i['UI']
+            counter += 1
+        uData = list(data.values())
+        output = apr(uData, ulist)
+        oD = {}
+        oD['recs'] = []
+        for i in output:
+            oD['recs'].append(i)
+        return oD
 
+#For returning random GE mod
+@app.route('/api/recList/recs/', methods = ["GET"])
+def get_rec1():
+    collection = mongo.db.lessonList.find()
+    output = []
+    for mods in collection:
+        if (mods['_id'][0:2] == "GE"):
+            output.append(mods['_id'])
+    ran = random.randint(0,len(output)-1)
+    mod = output[ran]
+    rec = {'recs':[mod]}
+    return rec
 
 
 #For returning specific module information about the class
