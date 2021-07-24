@@ -7,8 +7,7 @@ import random
 app = Flask(__name__)
 app.config["MONGO_DBNAME"] = "API"
 app.config["MONGO_URI"] = "mongodb+srv://Derek:sciencemajic123@cluster0.xedr3.mongodb.net/API?retryWrites=true&w=majority&ssl_cert_reqs=CERT_NONE"
-app.config['CORS_HEADERS'] = 'Content-Type'
-CORS(app)
+CORS(app, resource = r'/api/*')
 mongo = PyMongo(app)
 
 @app.route('/')
@@ -28,7 +27,7 @@ def add_rec(list):
 
 #For getting reccomended modules based on user inputs
 @app.route('/api/recList/recs/<inp>',methods = ['GET'])
-@cross_origin(origin='*',headers=['Content-Type','Authorization'])
+
 def get_rec(inp):
     if (inp != None):
         ulist = inp.split('_')
