@@ -44,7 +44,18 @@ def get_rec(inp):
         oD['recs'] = []
         for i in output:
             oD['recs'].append(i)
-        return oD
+        if (len(oD['recs']) == 0):
+            collection1 = mongo.db.lessonList.find()
+            output1 = []
+            for mods in collection1:
+                if (mods['_id'][0:2] == "GE"):
+                    output1.append(mods['_id'])
+            ran = random.randint(0, len(output1) - 1)
+            mod = output1[ran]
+            rec = {'recs': [mod]}
+            return rec
+        else:
+            return oD
 
 #For returning random GE mod
 @app.route('/api/recList/recs/', methods = ["GET"])
