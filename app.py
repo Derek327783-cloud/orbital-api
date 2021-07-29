@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, make_response
 from flask_pymongo import PyMongo
 from flask_cors import CORS, cross_origin
 from apriori import apr, ranList
@@ -29,6 +29,8 @@ def add_rec(list):
 @app.route('/api/recList/recs/<inp>',methods = ['GET'])
 @cross_origin()
 def get_rec(inp):
+    response = make_response()
+    response.headers.add("Access-Control-Allow-Origin", "*")
     if (inp != None):
         ulist = inp.split('_')
         collection = mongo.db.recList.find()
