@@ -1,4 +1,4 @@
-from flask import Flask, make_response
+from flask import Flask
 from flask_pymongo import PyMongo
 from flask_cors import CORS, cross_origin
 from apriori import apr, ranList
@@ -22,7 +22,7 @@ def add_rec(list):
     for i in combi:
         i = i.upper()
     input = {'UI':combi}
-    x = mongo.db.recList.insert_one(input)
+    x = mongo.db.recList1.insert_one(input)
     return "updated"
 
 #For getting reccomended modules based on user inputs
@@ -31,7 +31,7 @@ def add_rec(list):
 def get_rec(inp):
     if (inp != None):
         ulist = inp.split('_')
-        collection = mongo.db.recList.find()
+        collection = mongo.db.recList1.find()
         data = {}
         counter = 0
         for i in collection:
