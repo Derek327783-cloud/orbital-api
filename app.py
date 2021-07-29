@@ -29,8 +29,6 @@ def add_rec(list):
 @app.route('/api/recList/recs/<inp>',methods = ['GET'])
 @cross_origin()
 def get_rec(inp):
-    response = make_response()
-    response.headers.add("Access-Control-Allow-Origin", "*")
     if (inp != None):
         ulist = inp.split('_')
         collection = mongo.db.recList.find()
