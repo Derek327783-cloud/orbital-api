@@ -27,7 +27,7 @@ def add_rec(list):
 
 #For getting reccomended modules based on user inputs
 @app.route('/api/recList/recs/<inp>',methods = ['GET'])
-
+@cross_origin()
 def get_rec(inp):
     if (inp != None):
         ulist = inp.split('_')
